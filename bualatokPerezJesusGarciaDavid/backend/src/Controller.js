@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 var conn = mysql.createConnection(
     {
-        host: 'localhost:3306',
+        host: 'localhost',
         user: 'root',
         password: 'root',
         database: 'daweb'
@@ -10,12 +10,12 @@ var conn = mysql.createConnection(
 
 conn.connect(function (error) {
     if (error) {
-        console.log('The database cannot be reached');
+        throw error;
     }
 })
 
 exports.addUser = function(user) {
-    conn.query('inser into user set ?', user, function (error, result) {
+    conn.query('insert into user set ?', user, function (error, result) {
         if (error) {
             console.log(error);
             return;
