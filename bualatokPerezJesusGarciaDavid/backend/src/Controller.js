@@ -22,3 +22,17 @@ exports.addUser = function(user) {
         }
     })
 }
+
+exports.getUser = function(user, password) {
+    conn.query('select * from user where user = ?', user, function (error, result) {
+        if (error) {
+            console.log(error);
+            return;
+        }
+        
+        if (result.password === password)
+            return new User(result.name, result.surname, result.user, result.password, result.credit, result.province, result.email);
+
+        return null;
+    })
+}
