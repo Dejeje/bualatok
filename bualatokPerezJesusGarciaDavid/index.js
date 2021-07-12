@@ -8,20 +8,31 @@ document.addEventListener('DOMContentLoaded', () => {
         let credit = document.getElementById("credit").value;
         let province = "MUR";
 
-        console.log(username);
+        const dataToSend = JSON.stringify({"username": username, "name": name, "surname": surname, "email": email, "password": password, "credit": credit, "province": province});
+        let dataReceived;
 
-        var request = new XMLHttpRequest();
-        request.onreadystatechange = mostrar;
-        request.open('POST', 'http://localhost:8080/register', true);
-        request.send({username, name, surname, email, password, credit, province});
-
-        function mostrar() {
-            if(request.readyState == 4) {
-                if(request.status == 200) {
-                    alert(request.responseText);
-                }
+        fetch("http://localhost:8080/register", {
+            method: "post",
+            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+            body: dataToSend
+        })
+        .then(resp => {
+            if (resp.status === 200) {
+                return resp.json()
+            } else {
+                console.log("Status: " + resp.status)
+                return Promise.reject("server")
             }
-        }
+        })
+        .then(dataJson => {
+            dataReceived = JSON.parse(dataJson)
+        })
+        .catch(err => {
+            if (err === "server") return
+            console.log(err)
+        })
+
+        console.log(dataReceived);
     });
 })
 
