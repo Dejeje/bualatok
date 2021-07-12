@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const User = require('../../src/User');
 var conn = mysql.createConnection(
     {
         host: 'localhost',
@@ -23,16 +24,28 @@ exports.addUser = function(user) {
     })
 }
 
-exports.getUser = function(user, password) {
-    conn.query('select * from user where user = ?', user, function (error, result) {
-        if (error) {
-            console.log(error);
-            return;
-        }
-        
-        if (result.password === password)
-            return new User(result.name, result.surname, result.user, result.password, result.credit, result.province, result.email);
+exports.getUser = async function(username, password) {
+    const data = await getUserFromDb(username, password);
+    
+    if (password === data.password)
+        return new User(data.name, data.surname, data.username, data.password, data.credit, data.province, data.email);
+    
+    return null;
+}
 
-        return null;
+function getUserFromDb(username, password) {
+    return new Promise(data => {
+        conn.query('select * from user where username = ?', username, function (error, result) {
+            if (error) {
+                console.log(error);
+                throw error;
+            }
+            try {
+                data(result[0]);
+            } catch(error) {
+                data({});
+                throw error;
+            }
+        })
     })
 }
