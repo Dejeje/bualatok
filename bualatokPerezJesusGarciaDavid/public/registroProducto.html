@@ -5,11 +5,11 @@
 <head>
     <meta charset="UTF-8">
 
-    <link rel="stylesheet" type="text/css" href="style/main.css" />
+    <link rel="stylesheet" type="text/css" href="../style/main.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     
-    <script src="views/registroProducto.js"></script>
+    <script src="../views/registroProducto.js"></script>
 
     <title> Registrar Producto </title>
     <div id="header">
@@ -48,13 +48,13 @@
             <div class="form-group">
                 <label>Estado: </label>
 
-                Nuevo <input type="radio" name="state" value="nuevo" checked>
-                Bueno <input type="radio" name="state" value="bueno">
-                Malo <input type="radio" name="state" value="malo">
+                Nuevo <input type="radio" name="state" id="nuevoEstado" value="nuevo" checked>
+                Bueno <input type="radio" name="state" id="buenoEstado" value="bueno">
+                Malo <input type="radio" name="state" id="maloEstado" value="malo">
             </div>
             <div class="form-group">
                 <label>Foto: </label>
-                <input type="file" accept=".png,.jpg" onchange="loadFile(event)" required>
+                <input type="file" accept=".jpg" id="photoUploaded" onchange="loadFile(event)" required>
                 <img id="photo"/>
                 <script>
                     var loadFile = function (event) {
@@ -67,8 +67,8 @@
                 </script>
             </div>
 
-            <input type="submit" value="Cancelar" id="cancelButton">
-            <input type="submit" value="Aceptar" id="registerButton">
+            <input type="button" value="Cancelar" id="cancelButton">
+            <input type="button" value="Aceptar" id="registerButton">
     </div>
     </form>
     </div>
