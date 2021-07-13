@@ -21,7 +21,7 @@ router.post('/register', async function(req, res) {
     }
 });
 
-router.put('/login', async function(req, res) {
+router.post('/login', async function(req, res) {
     let username = req.body.username.toString();
     let password = req.body.password.toString();
 

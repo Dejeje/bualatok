@@ -26,9 +26,9 @@ exports.addUser = async function(name, surname, username, password, credit, prov
 
 exports.getUser = async function(username, password) {
     const data = await getUserFromDb(username);
-    
-    if (password === data.password)
-        return data;
+    if (data !== undefined)
+        if (password === data.password)
+            return data;
     
     return null;
 }

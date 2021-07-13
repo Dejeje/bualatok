@@ -9,20 +9,20 @@ const provincias = {
     'Navarra' : 'NAV', 'Pais Vasco' : 'PVA', 'Rioja' : 'RIO'
 }
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('registerButton').addEventListener("click", function() {
-        let username = document.getElementById("username").value;
-        let name = document.getElementById("name").value;
-        let surname = document.getElementById("surname").value;
-        let email = document.getElementById("email").value;
-        let password = document.getElementById("password").value;
-        let credit = document.getElementById("credit").value;
-        let province = "MUR";
+    document.getElementById('registerButton').addEventListener('click', function() {
+        let username = document.getElementById('username').value;
+        let name = document.getElementById('name').value;
+        let surname = document.getElementById('surname').value;
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+        let credit = document.getElementById('credit').value;
+        let province = provincias[document.getElementById('provincias').value];
 
-        const dataToSend = JSON.stringify({"username": username, "name": name, "surname": surname, "email": email, "password": password, "credit": credit, "province": province});
+        const dataToSend = JSON.stringify({'username': username, 'name': name, 'surname': surname, 'email': email, 'password': password, 'credit': credit, 'province': province});
 
-        fetch("http://localhost:8080/register", {
-            method: "post",
-            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+        fetch('http://localhost:8080/register', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
             body: dataToSend
         })
         .then(resp => {
