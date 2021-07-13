@@ -1,10 +1,9 @@
 const express = require('express');
-const User = require('../../src/User');
 const { addUser, getUser } = require('../src/Controller');
 
 var router = express.Router();
 
-router.post('/register', function(req, res) {
+router.post('/register', async function(req, res) {
     let name = req.body.name.toString();
     let surname = req.body.surname.toString();
     let username = req.body.username.toString();
@@ -12,12 +11,14 @@ router.post('/register', function(req, res) {
     let email = req.body.email.toString();
     let credit = parseInt(req.body.credit.toString());
     let province = req.body.province.toString();
-    
-    var newUser = new User(name, surname, username, password, credit, province, email);
 
-    addUser(newUser);
+    const inserted = await addUser(name, surname, username, password, credit, province, email);
 
-    res.send('Ok');
+    if (inserted === true) {
+        res.sendStatus(201);
+    } else {
+        res.sendStatus(409);
+    }
 });
 
 router.put('/login', async function(req, res) {
@@ -27,9 +28,10 @@ router.put('/login', async function(req, res) {
     var user = await getUser(username, password);
 
     if (user === null)
-        res.send('Not found');
-    else
-        res.send(user);
+        res.sendStatus(401);
+    else {
+        res.status(200).json(user);
+    }
 });
 
 module.exports = router;

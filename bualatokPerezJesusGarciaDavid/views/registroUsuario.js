@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let province = "MUR";
 
         const dataToSend = JSON.stringify({"username": username, "name": name, "surname": surname, "email": email, "password": password, "credit": credit, "province": province});
-        let dataReceived;
 
         fetch("http://localhost:8080/register", {
             method: "post",
@@ -17,22 +16,18 @@ document.addEventListener('DOMContentLoaded', () => {
             body: dataToSend
         })
         .then(resp => {
-            if (resp.status === 200) {
-                return resp.json()
-            } else {
-                console.log("Status: " + resp.status)
-                return Promise.reject("server")
+            if (resp.status === 201) {
+                return true;
+            } else if (resp.status === 409) {
+                return Promise.reject()
             }
         })
-        .then(dataJson => {
-            dataReceived = JSON.parse(dataJson)
+        .then(registered => {
+            alert(registered);
         })
         .catch(err => {
-            if (err === "server") return
-            console.log(err)
+            console.log('aqui');
         })
-
-        console.log(dataReceived);
     });
 })
 
