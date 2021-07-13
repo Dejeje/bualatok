@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const User = require('../../src/User');
+const User = require('../src/User');
 
 const conn = mysql.createConnection(
     {

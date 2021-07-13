@@ -3,6 +3,10 @@ const { addUser, getUser } = require('../src/Controller');
 
 var router = express.Router();
 
+router.get('/', function(req, res) {
+    res.render('login.html');
+})
+
 router.post('/register', async function(req, res) {
     let name = req.body.name.toString();
     let surname = req.body.surname.toString();
