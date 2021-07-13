@@ -1,96 +1,53 @@
-const mysql = require('mysql');
-const User = require('../src/User');
+import User from "./User.js";
 
-const conn = mysql.createConnection(
-    {
-        host: 'localhost',
-        user: 'root',
-        password: 'root',
-        database: 'daweb'
-    }
-);
+var currentUser;
 
-conn.connect(function (error) {
-    if (error) {
-        throw error;
-    }
-})
+function register(username, name, surname, email, password, credit, province) {
+    const dataToSend = JSON.stringify({'username': username, 'name': name, 'surname': surname, 'email': email, 'password': password, 'credit': credit, 'province': province});
 
-exports.addUser = async function(name, surname, username, password, credit, province, email) {
-    const user = new User(name, surname, username, password, credit, province, email);
-
-    const inserted = await insertUser(user);
-
-    return inserted;
-}
-
-exports.getUser = async function(username, password) {
-    const data = await getUserFromDb(username);
-    if (data !== undefined)
-        if (password === data.password)
-            return data;
-    
-    return null;
-}
-
-function getUserFromDb(username) {
-    return new Promise(data => {
-        conn.query('select * from user where username = ?', username, function (error, result) {
-            if (error) {
-                data({});
-                console.log(error);
-            } else {
-                try {
-                    data(result[0]);
-                } catch(error) {
-                    data({});
-                    console.log(error);
-                }
+        fetch('http://localhost:8080/register', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+            body: dataToSend
+        })
+        .then(resp => {
+            if (resp.status === 201) {
+                return true;
+            } else if (resp.status === 409) {
+                return Promise.reject();
             }
         })
+        .then(() => {
+            document.location.reload(true);
+            alert('Usuario registrado');
+        })
+        .catch(err => {
+            alert('Ya existe un usuario con estos datos');
+        })
+}
+
+function login(username, password) {
+    const dataToSend = JSON.stringify({'username': username, 'password': password});
+
+    fetch('http://localhost:8080/login', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        body: dataToSend
+    })
+    .then(resp => {
+        if (resp.status === 200)
+            return resp.json();
+        else
+            return Promise.reject();
+    })
+    .then(jsonResp => {
+        currentUser = new User(jsonResp.name, jsonResp.surname, jsonResp.username, jsonResp.password, jsonResp.credit, jsonResp.province, jsonResp.email);
+        // TODO : pasar a panel principal
+        window.location.replace("/public/buscar.html");
+    })
+    .catch(err => {
+        alert('Usuario no registrado');
     })
 }
 
-function insertUser(user) {
-    return new Promise(inserted => {
-        conn.query('insert into user set ?', user, function (error, result) {
-            if (error) {
-                inserted(false);
-                console.log(error);
-            } else {
-                try {
-                    inserted(true);
-                } catch(error) {
-                    inserted(false);
-                    console.log(error);
-                }
-            }
-        })
-    })
-}
-
-exports.addProduct = async function(name, price, description, photo, date, category, state) {
-    const product = new Product(name, price, description, photo, date, category, state);
-
-    const inserted = await insertProduct(product);
-
-    return inserted;
-}
-
-function insertProduct(product) {
-    return new Promise(inserted => {
-        conn.query('insert into product set ?', product, function (error, result) {
-            if (error) {
-                inserted(false);
-                console.log(error);
-            } else {
-                try {
-                    inserted(true);
-                } catch(error) {
-                    inserted(false);
-                    console.log(error);
-                }
-            }
-        })
-    })
-}
+export { register, login };

@@ -22,10 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         })
         .then(registered => {
-            alert(registered);
+            document.location.reload(true);
+            alert('Usuario registrado');
         })
         .catch(err => {
-            console.log('aqui');
+            alert('Ya existe un usuario con estos datos')
         })
     });
 })
