@@ -5,7 +5,6 @@ const { addUser, getUser } = require('../src/Controller');
 var router = express.Router();
 
 router.post('/register', function(req, res) {
-    console.log('Request incoming');
     let name = req.body.name.toString();
     let surname = req.body.surname.toString();
     let username = req.body.username.toString();
