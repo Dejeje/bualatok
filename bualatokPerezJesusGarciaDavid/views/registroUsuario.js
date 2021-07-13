@@ -1,3 +1,13 @@
+const provincias = {
+    'Andalucia' : 'AND', 'Aragon' : 'ARA',
+    'Asturias' : 'AST', 'Baleares' : 'BAL',
+    'Canarias' : 'CAN', 'Cantabria' : 'CANT',
+    'Castilla y Leon' : 'CLE', 'Castilla-La Mancha' : 'CMA',
+    'Cataluña' : 'CAT', 'Valencia' : 'VAL',
+    'Extremadura' : 'EXT', 'Galicia' : 'GAL',
+    'Madrid' : 'MAD', 'Murcia' : 'MUR',
+    'Navarra' : 'NAV', 'Pais Vasco' : 'PVA', 'Rioja' : 'RIO'
+}
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('registerButton').addEventListener("click", function() {
         let username = document.getElementById("username").value;
@@ -34,5 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         console.log(dataReceived);
     });
+
+    var provinciasSel = document.getElementById('provincias');
+    for (const provincia in provincias){
+        var opt = document.createElement('option');
+        opt.appendChild(document.createTextNode(provincia) );
+        opt.value = provincias[provincia]; 
+        provinciasSel.appendChild(opt);
+    }
 })
 

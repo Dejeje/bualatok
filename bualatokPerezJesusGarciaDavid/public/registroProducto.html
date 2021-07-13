@@ -47,13 +47,23 @@
             <div class="form-group">
                 <label>Estado: </label>
 
-                <input type="checkbox" name="estado" value="nuevo" checked>
-                <input type="checkbox" name="estado" value="bueno">
-                <input type="checkbox" name="estado" value="malo">
+                Nuevo <input type="radio" name="estado" value="nuevo" checked>
+                Bueno <input type="radio" name="estado" value="bueno">
+                Malo <input type="radio" name="estado" value="malo">
             </div>
             <div class="form-group">
                 <label>Foto: </label>
-                <input type="file" name="fichero" size="40" />
+                <input type="file" accept=".png,.jpg" onchange="loadFile(event)">
+                <img id="output" />
+                <script>
+                    var loadFile = function (event) {
+                        var output = document.getElementById('output');
+                        output.src = URL.createObjectURL(event.target.files[0]);
+                        output.onload = function () {
+                            URL.revokeObjectURL(output.src) // free memory
+                        }
+                    };
+                </script>
             </div>
 
             <input type="submit" value="Cancelar" id="cancelButton">
