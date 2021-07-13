@@ -68,3 +68,29 @@ function insertUser(user) {
         })
     })
 }
+
+exports.addProduct = async function(name, price, description, photo, date, category, state) {
+    const product = new Product(name, price, description, photo, date, category, state);
+
+    const inserted = await insertProduct(product);
+
+    return inserted;
+}
+
+function insertProduct(product) {
+    return new Promise(inserted => {
+        conn.query('insert into product set ?', product, function (error, result) {
+            if (error) {
+                inserted(false);
+                console.log(error);
+            } else {
+                try {
+                    inserted(true);
+                } catch(error) {
+                    inserted(false);
+                    console.log(error);
+                }
+            }
+        })
+    })
+}
