@@ -35,3 +35,21 @@ router.post('/login', async function(req, res) {
 });
 
 module.exports = router;
+
+router.post('/registerProduct', async function(req, res) {
+    let name = req.body.name.toString();
+    let description = req.body.description.toString();
+    let price = parseInt(req.body.price.toString());
+    let category = req.body.category.toString();
+    let state = req.body.state.toString();
+    let photo = req.body.photo.toString();
+
+
+    const inserted = await addProduct(name, price, description, photo, date, category, state);
+
+    if (inserted === true) {
+        res.sendStatus(201);
+    } else {
+        res.sendStatus(409);
+    }
+});
