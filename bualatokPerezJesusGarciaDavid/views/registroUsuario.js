@@ -10,6 +10,7 @@ const provincias = {
     'Madrid' : 'MAD', 'Murcia' : 'MUR',
     'Navarra' : 'NAV', 'Pais Vasco' : 'PVA', 'Rioja' : 'RIO'
 }
+
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('registerButton').addEventListener('click', function() {
         let username = document.getElementById('username').value;

@@ -1,32 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('registerButton').addEventListener('click', function() {
+    document.getElementById('registerButton').addEventListener('click', async function() {
         let name = document.getElementById('name').value;
         let description = document.getElementById('description').value;
         let price = document.getElementById('price').value;
         let category = document.getElementById('category').value;
-        let state = document.getElementsByName('state').value;
-        let photo = provincias[document.getElementById('photo').value];
+        let state;
 
-        const dataToSend = JSON.stringify({'name': name, 'description': description, 'price': price, 'category': category, 'state': state, 'photo': photo});
+        if (document.getElementById('nuevoEstado').checked) {
+            state = 'nuevo';
+        }
 
-        fetch('http://localhost:8080/registerProduct', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-            body: dataToSend
-        })
-        .then(resp => {
-            if (resp.status === 201) {
-                return true;
-            } else if (resp.status === 409) {
-                return Promise.reject()
-            }
-        })
-        .then(registered => {
-            document.location.reload(true);
-            alert('Usuario registrado');
-        })
-        .catch(err => {
-            alert('Ya existe un usuario con estos datos')
-        })
+        if (document.getElementById('buenoEstado').checked) {
+            state = 'bueno';
+        }
+
+        if (document.getElementById('maloEstado').checked) {
+            state = 'malo';
+        }
+
+        
     });
 })

@@ -32,6 +32,12 @@ exports.getUser = async function(username, password) {
     return null;
 }
 
+exports.addProduct = async function(name, price, description, date, category, state) {
+    const inserted = await insertProduct({"name": name, "price": price, "description": description, "date": date, "category": category, "state": state});
+
+    return inserted;
+}
+
 function getUserFromDb(username) {
     return new Promise(data => {
         conn.query('select * from user where username = ?', username, function (error, result) {
@@ -68,17 +74,9 @@ function insertUser(data) {
     })
 }
 
-exports.addProduct = async function(name, price, description, photo, date, category, state) {
-    const product = new Product(name, price, description, photo, date, category, state);
-
-    const inserted = await insertProduct(product);
-
-    return inserted;
-}
-
-function insertProduct(product) {
+function insertProduct(data) {
     return new Promise(inserted => {
-        conn.query('insert into product set ?', product, function (error, result) {
+        conn.query('insert into product set ?', data, function (error, result) {
             if (error) {
                 inserted(false);
                 console.log(error);
