@@ -46,6 +46,12 @@
     margin-top: 6px;
     margin-right: 70%;
   }
+
+  textarea {
+    width: 75%;
+    height: 150px;
+    margin-top: 15px;
+  }
   @media (min-width: 400px) {
     form {
       grid-template-columns: 200px 1fr;

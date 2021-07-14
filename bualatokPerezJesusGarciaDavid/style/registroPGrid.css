@@ -1,0 +1,8 @@
+div.contenedor {
+    display: grid;
+   /*  grid-template-columns: 200px 1fr;*/
+    grid-template-areas: "A A A A" "B B B B" "C C C C" "D F G H" "J J J J" "K K K K";
+  } 
+  #titulo{
+    grid-area: 1 / 2 / 1 / 3;
+  }
