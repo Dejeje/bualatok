@@ -36,7 +36,7 @@ router.post('/login', async function(req, res) {
         res.sendStatus(401);
     else {
         currentUser = user;
-        res.status(200).json(user);
+        res.sendStatus(200);
     }
 });
 
@@ -75,5 +75,12 @@ router.post('/editUser', async function(req, res) {
         res.sendStatus(409);
     }
 });
+
+router.get('/getUser', function(req, res) {
+    if (currentUser !== undefined)
+        res.status(200).json(currentUser);
+    else
+        res.sendStatus(404);
+})
 
 module.exports = router;

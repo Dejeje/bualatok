@@ -1,4 +1,4 @@
-import { editUser } from '../src/Controller.js';
+import { editUser, getUser } from '../src/Controller.js';
 
 const provincias = {
     'Andalucia' : 'AND', 'Aragon' : 'ARA',
@@ -11,7 +11,7 @@ const provincias = {
     'Navarra' : 'NAV', 'Pais Vasco' : 'PVA', 'Rioja' : 'RIO'
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('editButton').addEventListener('click', function() {
         let username = document.getElementById('username').value;
         let name = document.getElementById('name').value;
@@ -27,16 +27,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         editUser(username, name, surname, email, rePassword, credit, province);
     });
+    var user = await getUser();
 
     let username = document.getElementById('username');
     username.value = user.username;
-    let name = document.getElementById('name').value;
+    let name = document.getElementById('name');
     name.value = user.name;
-    let surname = document.getElementById('surname').value;
+    let surname = document.getElementById('surname');
     surname.value = user.surname;
-    let email = document.getElementById('email').value;
+    let email = document.getElementById('email');
     email.value = user.email;
-    let credit = document.getElementById('credit').value;
+    let credit = document.getElementById('credit');
     credit.value = user.credit;
     
     var provinciasSel = document.getElementById('province');

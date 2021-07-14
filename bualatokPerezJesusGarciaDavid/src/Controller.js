@@ -87,4 +87,15 @@ function editUser(username, name, surname, email, password, credit, province) {
     });
 }
 
-export { register, login, addProduct, editUser };
+async function getUser() {
+    const resp = await fetch('http://localhost:8080/getUser', {
+        method: 'get',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+
+    let respJson = await resp.json();
+    console.log(respJson);
+    return respJson;
+}
+
+export { register, login, addProduct, editUser, getUser };
