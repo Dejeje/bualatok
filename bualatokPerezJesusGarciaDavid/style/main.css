@@ -52,6 +52,12 @@
     height: 150px;
     margin-top: 15px;
   }
+
+  #texto{
+    float: left;
+    width: 85%;
+    margin-top: 6px;
+  }
   @media (min-width: 400px) {
     form {
       grid-template-columns: 200px 1fr;
