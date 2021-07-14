@@ -1,7 +1,5 @@
 const mysql = require('mysql');
 
-var currentUser;
-
 const conn = mysql.createConnection(
     {
         host: 'localhost',
@@ -61,6 +59,23 @@ exports.getUserProducts = async function(owner) {
     return null;
 }
 
+exports.getProduct = async function(id) {
+    const data = await getProductFromDb(id);
+    
+    if (data !== undefined)
+        return data;
+
+    return null;
+}
+
+exports.addCreditToUser = async function(owner, price) {
+    await addCredit(owner, price);
+}
+
+exports.deleteProduct = async function(id) {
+    await deleteProductFromDb(id);
+}
+
 function getUserFromDb(username) {
     return new Promise(data => {
         conn.query('select * from user where username = ?', username, function (error, result) {
@@ -115,7 +130,6 @@ function insertProduct(data) {
     })
 }
 
-//TODO falta arreglar sql para editar
 function editUser(data) {
     return new Promise(inserted => {
         conn.query('UPDATE user SET ? WHERE username = ? ', [data, data.username], function (error, result) {
@@ -134,12 +148,14 @@ function editUser(data) {
     })
 }
 
-function getProductsByFilter(text, minPrice, maxPrice, category, state) {
-    var query = 'select * from product ';
+async function getProductsByFilter(text, minPrice, maxPrice, category, state) {
+    var query1 = 'update product set timesSeen = timesSeen + 1 ';
+    var query2 = 'select * from product ';
+    var query = '';
     var params = new Array();
     var various = false;
     
-    if (text !== '' || minPrice !== '' || maxPrice !== '' || category !== '' || state !== '')
+    if (text !== '' || minPrice !== '' || maxPrice !== '' || category !== '' || state !== '') 
         query += 'where ';
 
     if (text !== '') {
@@ -180,9 +196,13 @@ function getProductsByFilter(text, minPrice, maxPrice, category, state) {
         params.push(state);
         query += 'state = ? ';
     }
-
+    
+    query1 += query;
+    query2 += query;
+    updateProducts(query1, params);
+    
     return new Promise(data => {
-        conn.query(query, params, function (error, result) {
+        conn.query(query2, params, function (error, result) {
             if (error) {
                 data({});
                 console.log(error);
@@ -195,7 +215,7 @@ function getProductsByFilter(text, minPrice, maxPrice, category, state) {
                 }
             }
         })
-    })
+    });
 }
 
 
@@ -215,4 +235,69 @@ function getUserProducts(owner) {
             }
         })
     })
+}
+
+function updateProducts(query, params) {
+    return new Promise(() => {
+        conn.query(query, params, function (error, result) {
+            if (error) {
+                console.log(error);
+            } else {
+                try {
+                } catch(error) {
+                    console.log(error);
+                }
+            }
+        })
+    })
+}
+
+function getProductFromDb(id) {
+    return new Promise(data => {
+        conn.query('select * from product where idproduct = ?', id, function (error, result) {
+            if (error) {
+                data({});
+                console.log(error);
+            } else {
+                try {
+                    data(result[0]);
+                } catch(error) {
+                    data({});
+                    console.log(error);
+                }
+            }
+        })
+    })
+}
+
+function addCredit(owner, price) {
+    return new Promise(() => {
+        conn.query('update user set credit = credit + ? where username = ?', [price, owner], function (error, result) {
+            if (error) {
+                console.log(error);
+            } else {
+                try {
+                } catch(error) {
+                    console.log(error);
+                }
+            }
+        })
+    })
+}
+
+function deleteProductFromDb(id) {
+    console.log(id);
+    return new Promise(() => {
+        conn.query('delete from product where idproduct = ?', id, function (error, result) {
+            if (error) {
+                console.log(error);
+            } else {
+                try {
+                } catch(error) {
+                    console.log(error);
+                }
+            }
+        })
+    })
+
 }

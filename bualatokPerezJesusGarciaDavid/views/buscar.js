@@ -39,17 +39,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             price.setAttribute('class','productPrice');
             price.appendChild(document.createTextNode(product.price));
 
+            var timesSeen = document.createElement('label');
+            price.setAttribute('class','timesSeen');
+            price.appendChild(document.createTextNode(product.timesSeen));
+
             var comprar = document.createElement('input');
             comprar.setAttribute('class','productButton');
             comprar.setAttribute('value', 'Comprar');
             comprar.setAttribute('type','button');
             comprar.addEventListener('click', async function() {
-                console.log(product.idproduct);
+                comprarProducto(product.idproduct);
             });
 
             div.appendChild(nombre);
             div.appendChild(description);
             div.appendChild(price);
+            div.appendChild(timesSeen);
             div.appendChild(comprar);
             
             container.appendChild(div);

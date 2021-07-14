@@ -1,4 +1,4 @@
-import { getAllProducts } from '../src/Controller.js';
+import { getAllProducts, logout } from '../src/Controller.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('edit-user').addEventListener('click', function() {
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         getAllProducts();
     });
     document.getElementById('logout').addEventListener('click', function() {
-        window.location.replace('../public/login.html');
+        logout();
     });
 
 });

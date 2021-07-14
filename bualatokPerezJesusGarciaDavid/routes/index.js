@@ -1,5 +1,5 @@
 const express = require('express');
-const { addUser, getUser, addProduct, getProductsByFilter, editUser, getUserProducts } = require('../src/Persistence');
+const { addUser, getUser, addProduct, getProductsByFilter, editUser, getUserProducts, addCreditToUser, deleteProduct, getProduct } = require('../src/Persistence');
 
 var router = express.Router();
 var currentUser;
@@ -38,6 +38,10 @@ router.post('/login', async function(req, res) {
         currentUser = user;
         res.sendStatus(200);
     }
+});
+
+router.post('/logout', function(req, res) {
+    res.sendStatus(205);
 });
 
 router.post('/registerProduct', async function(req, res) {
@@ -110,6 +114,23 @@ router.get('/getProducts', async function(req, res) {
         res.status(200).json(data);
     else
         res.sendStatus(404);
+});
+
+router.post('/comprar', async function(req, res) {
+    const product = await getProduct(req.body.idProduct);
+    
+    if (product === null)
+        res.sendStatus(404);
+    else if (currentUser.credit < product.price)
+        res.sendStatus(400);
+    else {
+        currentUser.credit -= product.price;
+
+        addCreditToUser(product.owner, product.price);
+        deleteProduct(product.idproduct);
+
+        res.sendStatus(200);
+    }
 });
 
 module.exports = router;

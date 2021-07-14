@@ -38,6 +38,21 @@ async function login(username, password) {
     }
 }
 
+function logout() {
+    fetch('http://localhost:8080/logout', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+    })
+    .then(resp => {
+        if (resp.status === 205)
+            return true;
+    })
+    .then(() => {
+        window.location.replace("../public/login.html");
+        alert('Se ha cerrado sesión');
+    })
+}
+
 function addProduct(name, price, description, category, state) {
     const dataToSend = JSON.stringify({'name': name, 'description': description, 'price': price, 'category': category, 'state': state, 'date': new Date().toDateString()});
     
@@ -118,18 +133,21 @@ async function comprarProducto(idProduct) {
         body: dataToSend
     })
     .then(resp => {
-        if (resp.status === 201) {
+        if (resp.status === 200) {
             return true;
-        } else if (resp.status === 409) {
-            return Promise.reject();
-        }
+        } else if (resp.status === 404) {
+            return Promise.reject('no encontrado');
+        } else if (resp.status === 400)
+            return Promise.reject('no credito')
     })
     .then(() => {
-        document.location.reload(true);
         alert('Producto comprado');
     })
     .catch(err => {
-        alert('No se ha podido comprar el producto');
+        if (err.message === 'no encontrado')
+            alert('El producto ya no está a la venta');
+        if (err.message === 'no encontrado')
+            alert('No hay credito suficiente');
     });
 }
 
@@ -145,4 +163,4 @@ async function getProductsByFilter(text, minPrice, maxPrice, category, state) {
     return respJson;
 }
 
-export { register, login, addProduct, editUser, getUser, getAllProducts, getProductsByFilter, comprarProducto };
+export { register, login, logout, addProduct, editUser, getUser, getAllProducts, getProductsByFilter, comprarProducto };
