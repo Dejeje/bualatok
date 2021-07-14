@@ -1,5 +1,5 @@
 const express = require('express');
-const { addUser, getUser, addProduct, getProducts, editUser } = require('../src/Persistence');
+const { addUser, getUser, addProduct, getProducts, editUser, getUserProducts } = require('../src/Persistence');
 
 var router = express.Router();
 var currentUser;
@@ -99,4 +99,11 @@ router.get('/getProducts', async function(req, res) {
         res.sendStatus(404);
 });
 
+router.get('/getProducts', async function(req, res) {
+    const data = await getUserProducts(currentUser.username);
+    if (data !== null)
+        res.status(200).json(data);
+    else
+        res.sendStatus(404);
+})
 module.exports = router;

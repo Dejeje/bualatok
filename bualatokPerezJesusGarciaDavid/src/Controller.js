@@ -98,7 +98,8 @@ async function getUser() {
     return respJson;
 }
 
-async function getProducts(){
+async function getAllProducts() {
+
     const resp = await fetch('http://localhost:8080/getProducts', {
         method: 'get',
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }

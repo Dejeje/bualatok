@@ -52,6 +52,15 @@ exports.getProducts = async function() {
     return null;
 }
 
+exports.getUserProducts = async function(owner) {
+    const data = await getUserProducts(owner);
+
+    if (data !== undefined)
+        return data;
+
+    return null;
+}
+
 function getUserFromDb(username) {
     return new Promise(data => {
         conn.query('select * from user where username = ?', username, function (error, result) {
@@ -144,3 +153,20 @@ function getProductsFromDb() {
 }
 
 
+function getUserProducts(owner) {
+    return new Promise(data => {
+        conn.query('select * from product where owner = ?', owner, function (error, result) {
+            if (error) {
+                data({});
+                console.log(error);
+            } else {
+                try {
+                    data(result);
+                } catch(error) {
+                    data({});
+                    console.log(error);
+                }
+            }
+        })
+    })
+}
