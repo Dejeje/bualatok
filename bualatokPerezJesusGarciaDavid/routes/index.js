@@ -2,6 +2,7 @@ const express = require('express');
 const { addUser, getUser, addProduct } = require('../src/Persistence');
 
 var router = express.Router();
+var currentUser;
 
 router.get('/', function(req, res) {
     res.render('login.html');
@@ -30,10 +31,11 @@ router.post('/login', async function(req, res) {
     let password = req.body.password.toString();
 
     var user = await getUser(username, password);
-
+    
     if (user === null)
         res.sendStatus(401);
     else {
+        currentUser = user;
         res.status(200).json(user);
     }
 });
@@ -45,7 +47,7 @@ router.post('/registerProduct', async function(req, res) {
     let category = req.body.category.toString();
     let state = req.body.state.toString();
     let date = req.body.date.toString();
-    let owner = req.body.owner.toString();
+    let owner = currentUser.username;
 
     const inserted = await addProduct(name, price, description, date, category, state, owner);
 
@@ -56,7 +58,7 @@ router.post('/registerProduct', async function(req, res) {
     }
 });
 
-router.post('/edit', async function(req, res) {
+router.post('/editUser', async function(req, res) {
     let name = req.body.name.toString();
     let surname = req.body.surname.toString();
     let username = req.body.username.toString();
@@ -73,15 +75,5 @@ router.post('/edit', async function(req, res) {
         res.sendStatus(409);
     }
 });
-
-router.post('/uploadPhoto', upload.single('photo'), (req, res) => {
-    const photo = req.body;
-    console.log(photo);
-    let path = `../upload/images/${photo.name}`;
-    console.log(path);
-    fs.saveAs(photo, path);
-
-    res.status(200).send(path);
-})
 
 module.exports = router;

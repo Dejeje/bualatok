@@ -32,8 +32,13 @@ exports.getUser = async function(username, password) {
     return null;
 }
 
+<<<<<<< HEAD
 exports.addProduct = async function(name, price, description, date, category, state) {
     const inserted = await insertProduct({"name": name, "price": price, "description": description, "date": date, "category": category, "state": state});
+=======
+exports.addProduct = async function(name, price, description, date, category, state, owner) {
+    const inserted = await insertProduct({"name": name, "price": price, "description": description, "date": date, "category": category, "state": state, "owner": owner, "timesSeen": 0});
+>>>>>>> 68f395b3f9e4de4910b0f831e802110d1567be0e
 
     return inserted;
 }
