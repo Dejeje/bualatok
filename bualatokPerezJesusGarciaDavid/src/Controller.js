@@ -133,4 +133,4 @@ async function comprarProducto(idProduct) {
     });
 }
 
-export { register, login, addProduct, editUser, getUser, getProducts, comprarProducto };
+export { register, login, addProduct, editUser, getUser, getAllProducts, comprarProducto };

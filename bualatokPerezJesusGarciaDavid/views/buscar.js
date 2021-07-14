@@ -1,11 +1,12 @@
-import { getProducts, comprarProducto } from '../src/Controller.js';
+import { getAllProducts, comprarProducto } from '../src/Controller.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-    var products = await getProducts();
+    var products = await getAllProducts();
     
     
     //guardar id hidden
-    for (const product in products){
+    for (const product of products) {
+        console.log(product);
         var div = document.getElementById('container');
         
         var nombre = document.createElement('label');
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         var comprar = document.createElement('input');
         comprar.setAttribute('class','productButton');
         comprar.setAttribute('type','button');
-        comprar.addEventListener('click', async function() {
+        comprar.addEventListener('click', async function(product) {
             await comprarProducto(product.id);
         });
 
