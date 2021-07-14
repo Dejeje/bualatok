@@ -1,18 +1,8 @@
 import { editUser, getUser } from '../src/Controller.js';
-
-const provincias = {
-    'Andalucia' : 'AND', 'Aragon' : 'ARA',
-    'Asturias' : 'AST', 'Baleares' : 'BAL',
-    'Canarias' : 'CAN', 'Cantabria' : 'CANT',
-    'Castilla y Leon' : 'CLE', 'Castilla-La Mancha' : 'CMA',
-    'Cataluña' : 'CAT', 'Valencia' : 'VAL',
-    'Extremadura' : 'EXT', 'Galicia' : 'GAL',
-    'Madrid' : 'MAD', 'Murcia' : 'MUR',
-    'Navarra' : 'NAV', 'Pais Vasco' : 'PVA', 'Rioja' : 'RIO'
-}
+import { provincias } from '../src/Provinces';
 
 document.addEventListener('DOMContentLoaded', async () => {
-    document.getElementById('editButton').addEventListener('click', function() {
+    document.getElementById('editButton').addEventListener('click', async function() {
         let username = document.getElementById('username').value;
         let name = document.getElementById('name').value;
         let surname = document.getElementById('surname').value;
@@ -22,15 +12,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         let credit = document.getElementById('credit').value;
         let province = document.getElementById('province').value;
         
-        // TODO : checkear parametros 
-        // TODO comprobar password es igual a la que tiene el usuario y se guarda la nueva
+        var user = await getUser();
+        let newPassword = user.password;
 
-        editUser(username, name, surname, email, rePassword, credit, province);
+        if (rePassword!== ""){
+            if(password=== user.password)
+                newPassword = rePassword;
+        }
+
+        editUser(username, name, surname, email, newPassword, credit, province);
     });
+    document.getElementById('cancelButton').addEventListener('click', function() {
+        window.location.replace('../public/menu.html');
+    });
+
     var user = await getUser();
 
     let username = document.getElementById('username');
     username.value = user.username;
+    username.setAttribute("readonly", true);
     let name = document.getElementById('name');
     name.value = user.name;
     let surname = document.getElementById('surname');

@@ -1,15 +1,5 @@
 import { register } from '../src/Controller.js';
-
-const provincias = {
-    'Andalucia' : 'AND', 'Aragon' : 'ARA',
-    'Asturias' : 'AST', 'Baleares' : 'BAL',
-    'Canarias' : 'CAN', 'Cantabria' : 'CANT',
-    'Castilla y Leon' : 'CLE', 'Castilla-La Mancha' : 'CMA',
-    'Cataluña' : 'CAT', 'Valencia' : 'VAL',
-    'Extremadura' : 'EXT', 'Galicia' : 'GAL',
-    'Madrid' : 'MAD', 'Murcia' : 'MUR',
-    'Navarra' : 'NAV', 'Pais Vasco' : 'PVA', 'Rioja' : 'RIO'
-}
+import { provincias } from '../src/Provinces';
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('registerButton').addEventListener('click', function() {
@@ -25,7 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // TODO : checkear parametros
         register(username, name, surname, email, password, credit, province);
     });
-
+    document.getElementById('loginButton').addEventListener('click', function() {
+        window.location.replace('../public/login.html');
+    });
     var provinciasSel = document.getElementById('province');
     for (const provincia in provincias){
         var opt = document.createElement('option');

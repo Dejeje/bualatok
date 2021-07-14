@@ -21,4 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         addProduct(name, price, description, category, state);        
     });
+    document.getElementById('cancelButton').addEventListener('click', function() {
+        window.location.replace('../public/menu.html');
+    });
+
 })

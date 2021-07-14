@@ -109,7 +109,7 @@ function insertProduct(data) {
 //TODO falta arreglar sql para editar
 function editUser(data) {
     return new Promise(inserted => {
-        conn.query('UPDATE into user SET ? WHERE username = ? ', data, data.username, function (error, result) {
+        conn.query('UPDATE user SET ? WHERE username = ? ', [data, data.username], function (error, result) {
             if (error) {
                 inserted(false);
                 console.log(error);
@@ -133,7 +133,7 @@ function getProductsFromDb() {
                 console.log(error);
             } else {
                 try {
-                    data(result[0]);
+                    data(result);
                 } catch(error) {
                     data({});
                     console.log(error);

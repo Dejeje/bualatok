@@ -98,4 +98,38 @@ async function getUser() {
     return respJson;
 }
 
-export { register, login, addProduct, editUser, getUser };
+async function getProducts(){
+    const resp = await fetch('http://localhost:8080/getProducts', {
+        method: 'get',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+    let respJson = await resp.json();
+    console.log(respJson);
+    return respJson;
+}
+
+async function comprarProducto(idProduct) {
+    const dataToSend = JSON.stringify({'idProduct': idProduct});
+
+    fetch('http://localhost:8080/comprar', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        body: dataToSend
+    })
+    .then(resp => {
+        if (resp.status === 201) {
+            return true;
+        } else if (resp.status === 409) {
+            return Promise.reject();
+        }
+    })
+    .then(() => {
+        document.location.reload(true);
+        alert('Producto comprado');
+    })
+    .catch(err => {
+        alert('No se ha podido comprar el producto');
+    });
+}
+
+export { register, login, addProduct, editUser, getUser, getProducts, comprarProducto };

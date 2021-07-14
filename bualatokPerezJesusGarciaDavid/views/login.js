@@ -6,5 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let password = document.getElementById('password').value;
         login(username, password);
     })
+    document.getElementById('registroButton').addEventListener('click', function() {
+        window.location.replace('../public/registroUsuario.html');
+    })
 
 });

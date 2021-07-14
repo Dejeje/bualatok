@@ -1,5 +1,5 @@
 const express = require('express');
-const { addUser, getUser, addProduct } = require('../src/Persistence');
+const { addUser, getUser, addProduct, getProducts, editUser } = require('../src/Persistence');
 
 var router = express.Router();
 var currentUser;
@@ -67,6 +67,13 @@ router.post('/editUser', async function(req, res) {
     let credit = parseInt(req.body.credit.toString());
     let province = req.body.province.toString();
 
+    currentUser.name = name;
+    currentUser.surname = namsurnamee;
+    currentUser.password = password;
+    currentUser.email = email;
+    currentUser.credit = credit;
+    currentUser.province = province;
+
     const inserted = await editUser(name, surname, username, password, credit, province, email);
 
     if (inserted === true) {
@@ -81,6 +88,15 @@ router.get('/getUser', function(req, res) {
         res.status(200).json(currentUser);
     else
         res.sendStatus(404);
-})
+});
+
+router.get('/getProducts', async function(req, res) {
+    let products = await getProducts();
+    
+    if (products !== undefined)
+        res.status(200).json(products);
+    else
+        res.sendStatus(404);
+});
 
 module.exports = router;
