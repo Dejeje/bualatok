@@ -23,6 +23,37 @@
             <div>
                 <input type="text" id="texto" size="100%" class="inCorto" placeholder="Escriba el producto a buscar..."><br>
             </div>
+            <div class="form-group">
+                <label>Precio minimo: </label>
+
+                <input type="number" id="price" value="0" class="inNum" required><br>
+            </div>
+            <div class="form-group">
+                <label>Precio maximo: </label>
+
+                <input type="number" id="price" value="1000" class="inNum" required><br>
+            </div>
+            <div class="form-group">
+                <label> Categoria: </label>
+                <select name="category" id="category">
+                    <option value=""></option>
+                    <option value="ropa">Ropa</option>
+                    <option value="electronica">Electronica</option>
+                    <option value="videojuegos">Videojuegos</option>
+                    <option value="otros">Otros</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Estado: </label>
+
+                Nuevo <input type="radio" name="state" id="nuevoEstado" value="nuevo">
+                Bueno <input type="radio" name="state" id="buenoEstado" value="bueno">
+                Malo <input type="radio" name="state" id="maloEstado" value="malo">
+            </div>
+
+
+
+
             <input type="button" value="Buscar" id="buscarButton">
 
         </div>
