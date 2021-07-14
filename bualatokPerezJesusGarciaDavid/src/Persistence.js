@@ -286,7 +286,6 @@ function addCredit(owner, price) {
 }
 
 function deleteProductFromDb(id) {
-    console.log(id);
     return new Promise(() => {
         conn.query('delete from product where idproduct = ?', id, function (error, result) {
             if (error) {
