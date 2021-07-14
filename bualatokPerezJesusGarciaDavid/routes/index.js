@@ -1,7 +1,4 @@
 const express = require('express');
-const multer = require('multer');
-const upload = multer({dest: __dirname + '/upload/images'});
-var fs = require('file-saver');
 const { addUser, getUser, addProduct } = require('../src/Persistence');
 
 var router = express.Router();
@@ -48,8 +45,9 @@ router.post('/registerProduct', async function(req, res) {
     let category = req.body.category.toString();
     let state = req.body.state.toString();
     let date = req.body.date.toString();
+    let owner = req.body.owner.toString();
 
-    const inserted = await addProduct(name, price, description, date, category, state);
+    const inserted = await addProduct(name, price, description, date, category, state, owner);
 
     if (inserted === true) {
         res.sendStatus(201);
@@ -57,15 +55,5 @@ router.post('/registerProduct', async function(req, res) {
         res.sendStatus(409);
     }
 });
-
-router.post('/uploadPhoto', upload.single('photo'), (req, res) => {
-    const photo = req.body;
-    console.log(photo);
-    let path = `../upload/images/${photo.name}`;
-    console.log(path);
-    fs.saveAs(photo, path);
-
-    res.status(200).send(path);
-})
 
 module.exports = router;

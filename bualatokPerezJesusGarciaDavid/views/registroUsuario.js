@@ -1,4 +1,4 @@
-import { register } from '../src/Controller.js';
+import Controller from '../src/Controller.js';
 
 const provincias = {
     'Andalucia' : 'AND', 'Aragon' : 'ARA',
@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let province = document.getElementById('province').value;
         
         // TODO : checkear parametros
-
-        register(username, name, surname, email, password, credit, province);
+        var controller = new Controller();
+        controller.register(username, name, surname, email, password, credit, province);
     });
 
     var provinciasSel = document.getElementById('province');
