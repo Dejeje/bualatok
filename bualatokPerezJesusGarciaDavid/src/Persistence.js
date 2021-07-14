@@ -1,5 +1,7 @@
 const mysql = require('mysql');
 
+var currentUser;
+
 const conn = mysql.createConnection(
     {
         host: 'localhost',
@@ -30,8 +32,8 @@ exports.getUser = async function(username, password) {
     return null;
 }
 
-exports.addProduct = async function(name, price, description, date, category, state, owner) {
-    const inserted = await insertProduct({"name": name, "price": price, "description": description, "date": date, "category": category, "state": state, "owner": owner});
+exports.addProduct = async function(name, price, description, date, category, state) {
+    const inserted = await insertProduct({"name": name, "price": price, "description": description, "date": date, "category": category, "state": state});
 
     return inserted;
 }
@@ -40,6 +42,14 @@ exports.editUser = async function(name, surname, username, password, credit, pro
     const inserted = await editUser({ "name": name, "surname": surname, "username": username, "password": password, "credit": credit, "province": province, "email": email});
 
     return inserted;
+}
+
+exports.getProducts = async function() {
+    const data = await getProductsFromDb();
+    if (data !== undefined)
+        return data;
+    
+    return null;
 }
 
 function getUserFromDb(username) {
@@ -114,3 +124,23 @@ function editUser(data) {
         })
     })
 }
+
+function getProductsFromDb() {
+    return new Promise(data => {
+        conn.query('select * from product', function (error, result) {
+            if (error) {
+                data({});
+                console.log(error);
+            } else {
+                try {
+                    data(result[0]);
+                } catch(error) {
+                    data({});
+                    console.log(error);
+                }
+            }
+        })
+    })
+}
+
+

@@ -56,8 +56,6 @@ router.post('/registerProduct', async function(req, res) {
     }
 });
 
-<<<<<<< HEAD
-=======
 router.post('/edit', async function(req, res) {
     let name = req.body.name.toString();
     let surname = req.body.surname.toString();
@@ -86,5 +84,4 @@ router.post('/uploadPhoto', upload.single('photo'), (req, res) => {
     res.status(200).send(path);
 })
 
->>>>>>> e9a60de7bbbef076044ce5bf0db8e40ab1462ed2
 module.exports = router;
