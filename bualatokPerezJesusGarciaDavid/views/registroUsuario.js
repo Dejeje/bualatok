@@ -1,5 +1,5 @@
 import { register } from '../src/Controller.js';
-import { provincias } from '../src/Provinces';
+import { provincias } from '../src/Provinces.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('registerButton').addEventListener('click', function() {

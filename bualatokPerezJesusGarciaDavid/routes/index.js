@@ -1,5 +1,5 @@
 const express = require('express');
-const { addUser, getUser, addProduct, getProducts, editUser, getUserProducts } = require('../src/Persistence');
+const { addUser, getUser, addProduct, getProductsByFilter, editUser, getUserProducts } = require('../src/Persistence');
 
 var router = express.Router();
 var currentUser;
@@ -90,9 +90,14 @@ router.get('/getUser', function(req, res) {
         res.sendStatus(404);
 });
 
-router.get('/getProducts', async function(req, res) {
-    let products = await getProducts();
+router.post('/getProductsByFilter', async function(req, res) {
+    let text = req.body.text.toString();
+    let minPrice = req.body.minPrice.toString();
+    let maxPrice = req.body.maxPrice.toString();
+    let category = req.body.cateogory.toString();
+    let state = req.body.state.toString();
     
+    let products = await getProductsByFilter(text, minPrice, maxPrice, category, state);
     if (products !== undefined)
         res.status(200).json(products);
     else
@@ -105,5 +110,6 @@ router.get('/getProducts', async function(req, res) {
         res.status(200).json(data);
     else
         res.sendStatus(404);
-})
+});
+
 module.exports = router;

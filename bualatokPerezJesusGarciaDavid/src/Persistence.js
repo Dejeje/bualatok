@@ -44,8 +44,8 @@ exports.editUser = async function(name, surname, username, password, credit, pro
     return inserted;
 }
 
-exports.getProducts = async function() {
-    const data = await getProductsFromDb();
+exports.getProductsByFilter = async function(text, minPrice, maxPrice, category, state) {
+    const data = await getProductsByFilter(text, minPrice, maxPrice, category, state);
     if (data !== undefined)
         return data;
     
@@ -134,9 +134,55 @@ function editUser(data) {
     })
 }
 
-function getProductsFromDb() {
+function getProductsByFilter(text, minPrice, maxPrice, category, state) {
+    var query = 'select * from product ';
+    var params = new Array();
+    var various = false;
+    
+    if (text !== '' || minPrice !== '' || maxPrice !== '' || category !== '' || state !== '')
+        query += 'where ';
+
+    if (text !== '') {
+        query += 'text like ? or description like ? ';
+        params.push(text);
+        params.push(text);
+        various = true;
+    }
+
+    if (minPrice !== '') {
+        if (various === true) {
+            query += 'and ';
+        }
+        params.push(minPrice);
+        query += 'price >= ? ';
+        various = true;
+    }
+    if (maxPrice !== '') {
+        if (various === true) {
+            query += 'and ';
+        }
+        params.push(maxPrice);
+        query += 'price <= ? ';
+        various = true;
+    }
+    if (category !== '') {
+        if (various === true) {
+            query += 'and ';
+        }
+        params.push(category);
+        query += 'category = ? ';
+        various = true;
+    }
+    if (state !== '') {
+        if (various === true) {
+            query += 'and ';
+        }
+        params.push(state);
+        query += 'state = ? ';
+    }
+
     return new Promise(data => {
-        conn.query('select * from product', function (error, result) {
+        conn.query(query, params, function (error, result) {
             if (error) {
                 data({});
                 console.log(error);

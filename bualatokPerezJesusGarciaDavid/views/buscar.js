@@ -1,48 +1,58 @@
-import { getAllProducts, comprarProducto } from '../src/Controller.js';
+import { getProductsByFilter, comprarProducto } from '../src/Controller.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-    var products = await getAllProducts();
-    
-    var i = 0;
-    //guardar id hidden
-    for (const product of products) {
-        console.log(product);
-        var container = document.getElementById('container');
-        
-        var div = document.createElement('div');
-        
-        var hidden_id = document.createElement('label');
-        hidden_id.setAttribute('id', i);
-        hidden_id.setAttribute('value', product.id);
-        hidden_id.hidden = true;
+    document.getElementById('buscarButton').addEventListener('click', async () => {
+        let text = document.getElementById('texto').value.toString();
+        let minPrice = parseInt(document.getElementById('minPrice').value.toString());
+        let maxPrice = parseInt(document.getElementById('maxPrice').value.toString());
+        let category = document.getElementById('category').value;
+        let state = '';
 
-        var nombre = document.createElement('label');
-        nombre.setAttribute('class','productLabel');
-        nombre.appendChild(document.createTextNode(product.name));
-      
-        var description = document.createElement('label');
-        description.setAttribute('class','productTextArea');
-        description.appendChild(document.createTextNode(product.description));
-        
-        var price = document.createElement('label');
-        price.setAttribute('class','productPrice');
-        price.appendChild(document.createTextNode(product.price));
+        if (document.getElementById('nuevoEstado').checked) {
+            state = 'nuevo';
+        }
 
-        var comprar = document.createElement('input');
-        comprar.setAttribute('class','productButton');
-        comprar.setAttribute('value', 'Comprar');
-        comprar.setAttribute('type','button');
-        comprar.addEventListener('click', async function() {
-            console.log(document.getElementById(i.toString()).value);
-        });
+        if (document.getElementById('buenoEstado').checked) {
+            state = 'bueno';
+        }
 
-        div.appendChild(nombre);
-        div.appendChild(description);
-        div.appendChild(price);
-        div.appendChild(comprar); 
-        
-        container.appendChild(div);
+        if (document.getElementById('maloEstado').checked) {
+            state = 'malo';
+        }
 
-        ++i;
-    }
+        var products = await getProductsByFilter(text, minPrice, maxPrice, category, state);
+        for (const product of products) {
+            console.log(product);
+            var container = document.getElementById('container');
+            
+            var div = document.createElement('div');
+            
+            var nombre = document.createElement('label');
+            nombre.setAttribute('class','productLabel');
+            nombre.appendChild(document.createTextNode(product.name));
+          
+            var description = document.createElement('label');
+            description.setAttribute('class','productTextArea');
+            description.appendChild(document.createTextNode(product.description));
+            
+            var price = document.createElement('label');
+            price.setAttribute('class','productPrice');
+            price.appendChild(document.createTextNode(product.price));
+
+            var comprar = document.createElement('input');
+            comprar.setAttribute('class','productButton');
+            comprar.setAttribute('value', 'Comprar');
+            comprar.setAttribute('type','button');
+            comprar.addEventListener('click', async function() {
+                console.log(product.idproduct);
+            });
+
+            div.appendChild(nombre);
+            div.appendChild(description);
+            div.appendChild(price);
+            div.appendChild(comprar);
+            
+            container.appendChild(div);
+        }
+    })
 });

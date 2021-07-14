@@ -133,4 +133,16 @@ async function comprarProducto(idProduct) {
     });
 }
 
-export { register, login, addProduct, editUser, getUser, getAllProducts, comprarProducto };
+async function getProductsByFilter(text, minPrice, maxPrice, category, state) {
+    const dataToSend = JSON.stringify({'text': text, 'minPrice': minPrice, 'maxPrice': maxPrice, 'cateogory': category, 'state': state});
+    
+    const resp = await fetch('http://localhost:8080/getProductsByFilter', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        body: dataToSend
+    });
+    let respJson = await resp.json();
+    return respJson;
+}
+
+export { register, login, addProduct, editUser, getUser, getAllProducts, getProductsByFilter, comprarProducto };

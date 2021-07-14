@@ -1,5 +1,5 @@
 import { editUser, getUser } from '../src/Controller.js';
-import { provincias } from '../src/Provinces';
+import { provincias } from '../src/Provinces.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('editButton').addEventListener('click', async function() {
