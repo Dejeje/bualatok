@@ -81,9 +81,6 @@ class Controller {
     }
 }
 
-<<<<<<< HEAD
-export default Controller;
-=======
 function editUser(username, name, surname, email, password, credit, province) {
     const dataToSend = JSON.stringify({'username': username, 'name': name, 'surname': surname, 'email': email, 'password': password, 'credit': credit, 'province': province});
 
@@ -109,4 +106,3 @@ function editUser(username, name, surname, email, password, credit, province) {
 }
 
 export { register, login, addProduct };
->>>>>>> e9a60de7bbbef076044ce5bf0db8e40ab1462ed2

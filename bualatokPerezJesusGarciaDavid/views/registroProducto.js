@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.getElementById('maloEstado').checked) {
             state = 'malo';
         }
-        var controller = new Controller();
         controller.addProduct(name, price, description, category, state);        
     });
 })
