@@ -58,7 +58,7 @@ router.post('/registerProduct', async function(req, res) {
     }
 });
 
-router.post('/edit', async function(req, res) {
+router.post('/editUser', async function(req, res) {
     let name = req.body.name.toString();
     let surname = req.body.surname.toString();
     let username = req.body.username.toString();

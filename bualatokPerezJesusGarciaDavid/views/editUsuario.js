@@ -1,4 +1,4 @@
-import myInstance from '../src/Controller.js';
+import { editUser } from '../src/Controller.js';
 
 const provincias = {
     'Andalucia' : 'AND', 'Aragon' : 'ARA',

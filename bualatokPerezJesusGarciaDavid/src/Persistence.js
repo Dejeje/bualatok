@@ -31,7 +31,7 @@ exports.getUser = async function(username, password) {
 }
 
 exports.addProduct = async function(name, price, description, date, category, state, owner) {
-    const inserted = await insertProduct({"name": name, "price": price, "description": description, "date": date, "category": category, "state": state, "owner": owner});
+    const inserted = await insertProduct({"name": name, "price": price, "description": description, "date": date, "category": category, "state": state, "owner": owner, "timesSeen": 0});
 
     return inserted;
 }
