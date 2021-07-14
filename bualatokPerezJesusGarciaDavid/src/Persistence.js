@@ -159,7 +159,7 @@ async function getProductsByFilter(text, minPrice, maxPrice, category, state) {
         query += 'where ';
 
     if (text !== '') {
-        query += 'text like ? or description like ? ';
+        query += 'name like ? or description like ? ';
         params.push(text);
         params.push(text);
         various = true;
