@@ -1,14 +1,19 @@
 
-  div.container {
+  div.contenedor {
     display: grid;
    /*  grid-template-columns: 200px 1fr;*/
-    grid-template-areas: "A A A A", "B B B B", "C C C C", "D F G H", "J J J J", "K K K K";
+    grid-template-areas: "A A A A" "B B B B" "C C C C" "D F G H" "J J J J" "K K K K";
+  } 
+
+
+  div.container {
 
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 20px;
   } 
   
+
   label{
    /* display: inline-block;*/
     float: left;
