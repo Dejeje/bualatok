@@ -98,4 +98,15 @@ async function getUser() {
     return respJson;
 }
 
-export { register, login, addProduct, editUser, getUser };
+async function getAllProducts() {
+
+    const resp = await fetch('http://localhost:8080/getProducts', {
+        method: 'get',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+    });
+    let respJson = await resp.json();
+    console.log(respJson);
+    return respJson;
+}
+
+export { register, login, addProduct, editUser, getUser, getAllProducts };
