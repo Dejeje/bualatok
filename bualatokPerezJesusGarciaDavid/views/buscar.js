@@ -13,16 +13,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         nombre.setAttribute('class','productLabel');
         nombre.appendChild(document.createTextNode(product.name));
       
-        var description = document.createElement('textarea');
+        var description = document.createElement('label');
         description.setAttribute('class','productTextArea');
-        description.setAttribute("readonly", true);
-        description.value = product.description;
+        description.appendChild(document.createTextNode(product.description));
         
-        var price = document.createElement('input');
+        var price = document.createElement('label');
         price.setAttribute('class','productPrice');
-        price.setAttribute('type','number');
-        price.setAttribute("readonly", true);
-        price.value = product.price;
+        price.appendChild(document.createTextNode(product.price));
 
         var comprar = document.createElement('input');
         comprar.setAttribute('class','productButton');
