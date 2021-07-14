@@ -36,6 +36,12 @@ exports.addProduct = async function(name, price, description, date, category, st
     return inserted;
 }
 
+exports.editUser = async function(name, surname, username, password, credit, province, email) {
+    const inserted = await editUser({ "name": name, "surname": surname, "username": username, "password": password, "credit": credit, "province": province, "email": email});
+
+    return inserted;
+}
+
 function getUserFromDb(username) {
     return new Promise(data => {
         conn.query('select * from user where username = ?', username, function (error, result) {
@@ -75,6 +81,25 @@ function insertUser(data) {
 function insertProduct(data) {
     return new Promise(inserted => {
         conn.query('insert into product set ?', data, function (error, result) {
+            if (error) {
+                inserted(false);
+                console.log(error);
+            } else {
+                try {
+                    inserted(true);
+                } catch(error) {
+                    inserted(false);
+                    console.log(error);
+                }
+            }
+        })
+    })
+}
+
+//TODO falta arreglar sql para editar
+function editUser(data) {
+    return new Promise(inserted => {
+        conn.query('UPDATE into user SET ? WHERE username = ? ', data, data.username, function (error, result) {
             if (error) {
                 inserted(false);
                 console.log(error);

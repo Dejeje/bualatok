@@ -56,4 +56,35 @@ router.post('/registerProduct', async function(req, res) {
     }
 });
 
+<<<<<<< HEAD
+=======
+router.post('/edit', async function(req, res) {
+    let name = req.body.name.toString();
+    let surname = req.body.surname.toString();
+    let username = req.body.username.toString();
+    let password = req.body.password.toString();
+    let email = req.body.email.toString();
+    let credit = parseInt(req.body.credit.toString());
+    let province = req.body.province.toString();
+
+    const inserted = await editUser(name, surname, username, password, credit, province, email);
+
+    if (inserted === true) {
+        res.sendStatus(201);
+    } else {
+        res.sendStatus(409);
+    }
+});
+
+router.post('/uploadPhoto', upload.single('photo'), (req, res) => {
+    const photo = req.body;
+    console.log(photo);
+    let path = `../upload/images/${photo.name}`;
+    console.log(path);
+    fs.saveAs(photo, path);
+
+    res.status(200).send(path);
+})
+
+>>>>>>> e9a60de7bbbef076044ce5bf0db8e40ab1462ed2
 module.exports = router;

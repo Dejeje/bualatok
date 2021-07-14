@@ -81,4 +81,32 @@ class Controller {
     }
 }
 
+<<<<<<< HEAD
 export default Controller;
+=======
+function editUser(username, name, surname, email, password, credit, province) {
+    const dataToSend = JSON.stringify({'username': username, 'name': name, 'surname': surname, 'email': email, 'password': password, 'credit': credit, 'province': province});
+
+    fetch('http://localhost:8080/edit', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        body: dataToSend
+    })
+    .then(resp => {
+        if (resp.status === 201) {
+            return true;
+        } else if (resp.status === 409) {
+            return Promise.reject();
+        }
+    })
+    .then(() => {
+        document.location.reload(true);
+        alert('Usuario editado');
+    })
+    .catch(err => {
+        alert('No se han podido editar los datos');
+    });
+}
+
+export { register, login, addProduct };
+>>>>>>> e9a60de7bbbef076044ce5bf0db8e40ab1462ed2
