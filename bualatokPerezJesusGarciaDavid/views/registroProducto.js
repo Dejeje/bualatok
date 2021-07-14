@@ -1,4 +1,4 @@
-import Controller from '../src/Controller.js';
+import myInstance from '../src/Controller.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('registerButton').addEventListener('click', async function() {
@@ -19,6 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.getElementById('maloEstado').checked) {
             state = 'malo';
         }
-        controller.addProduct(name, price, description, category, state);        
+        myInstance.addProduct(name, price, description, category, state);        
     });
 })

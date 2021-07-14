@@ -1,4 +1,4 @@
-import { register } from '../src/Controller.js';
+import myInstance from '../src/Controller.js';
 
 const provincias = {
     'Andalucia' : 'AND', 'Aragon' : 'ARA',

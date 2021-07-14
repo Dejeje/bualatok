@@ -2,13 +2,7 @@ import User from "./User.js";
 
 
 var myInstance = (function() {
-    var currentUser;
-  
-    function privateMethod () {
-      // ...
-    }
-  
-    return { // public interface
+    return {
     
     register: function (username, name, surname, email, password, credit, province) {
         const dataToSend = JSON.stringify({'username': username, 'name': name, 'surname': surname, 'email': email, 'password': password, 'credit': credit, 'province': province});
@@ -47,15 +41,13 @@ var myInstance = (function() {
             else
                 return Promise.reject();
         })
-        .then(jsonResp => {
-            currentUser = new User(jsonResp.name, jsonResp.surname, jsonResp.username, jsonResp.password, jsonResp.credit, jsonResp.province, jsonResp.email);
-            // TODO : pasar a panel principal
-            window.location.replace("/public/buscar.html");
+        .then(() => {
+            window.location.replace("/public/menu.html");
         })
-        .catch(err => {
+        .catch(() => {
         });
     },
-    addProduct: function () {
+    addProduct: function (name, price, description, category, state) {
         const dataToSend = JSON.stringify({'name': name, 'description': description, 'price': price, 'category': category, 'state': state, 'date': new Date().toDateString()});
     
         fetch('http://localhost:8080/registerProduct', {
@@ -108,7 +100,7 @@ var myInstance = (function() {
     };
   })();
 
-export { register, login, addProduct, editUser, getUser };
+export default myInstance;
 let instance = null;
 
 class Controller {
@@ -157,7 +149,7 @@ class Controller {
         let jsonResp;
         if (resp.status === 200) {
             jsonResp = await resp.json();
-            this.currentUser = new User(jsonResp.name, jsonResp.surname, jsonResp.username, jsonResp.password, jsonResp.credit, jsonResp.province, jsonResp.email);
+            currentUser = new User(jsonResp.name, jsonResp.surname, jsonResp.username, jsonResp.password, jsonResp.credit, jsonResp.province, jsonResp.email);
             window.location.replace("../public/menu.html");
         } else {
            alert('Las credenciales son incorrectas'); 
@@ -165,7 +157,7 @@ class Controller {
     }
 
     addProduct(name, price, description, category, state) {
-        console.log(this.currentUser);
+        console.log(currentUser);
         const dataToSend = JSON.stringify({'name': name, 'description': description, 'price': price, 'category': category, 'state': state, 'date': new Date().toDateString(), "owner": this.currentUser.username});
         
         fetch('http://localhost:8080/registerProduct', {
@@ -214,4 +206,3 @@ function editUser(username, name, surname, email, password, credit, province) {
     });
 }
 
-export { register, login, addProduct };
