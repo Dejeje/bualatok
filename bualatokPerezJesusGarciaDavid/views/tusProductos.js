@@ -25,4 +25,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         container.appendChild(div);
     }
+
+    document.getElementById('volverButton').addEventListener('click', function() {
+        window.location.replace('../public/menu.html');
+    })
 });
