@@ -12,7 +12,21 @@ document.addEventListener('DOMContentLoaded', () => {
         let credit = document.getElementById('credit').value;
         let province = document.getElementById('province').value;
         
-        // TODO : checkear parametros
+        if (username === '' || name === '' || surname === '' || email === '' || password === '' || rePassword === '' || credit === '' || province === '') {
+            alert('Son necesarios todos los parámetros');
+            return;
+        }
+
+        if (credit <= 0) {
+            alert('El crédito debe ser mayor que 0');
+            return;
+        }
+
+        if (password !== rePassword) {
+            alert('Las contraseñas no coinciden');
+            return;
+        }
+
         register(username, name, surname, email, password, credit, province);
     });
     document.getElementById('loginButton').addEventListener('click', function() {
