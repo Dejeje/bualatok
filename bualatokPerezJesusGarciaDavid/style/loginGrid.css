@@ -1,0 +1,47 @@
+
+  div.contenedor {
+    display: grid;
+   /*  grid-template-columns: 200px 1fr;*/
+    grid-template-areas: "A A A A" "B B B B" "C C C C" "D F G H" "J J J J" "K K K K";
+  } 
+  #titulo{
+    grid-area: 1 / 2 / 1 / 3;
+  }
+  #labelLogin{
+    grid-area: 2 / 2 / 2 / 3;
+  }
+
+  #icono{
+    grid-area: 3 / 2 / 3 / 3;
+  }
+
+  div.container {
+    grid-area: 4 / 1 / 4 / 4;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+  } 
+  div.container {
+    grid-area: 4 / 1 / 4 / 4;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+  } 
+  .inLargo{
+    
+    float: left;
+    width: 85%;
+    margin-top: 6px;
+  }
+
+  
+  #registroButton{
+    grid-area: 5 / 3/ 5 / 3;
+    margin-right: 50px;
+  }
+
+  
+  #loginButton{
+    grid-area: 5 / 1 / 5 / 1;
+    margin-left: 50px;
+  }

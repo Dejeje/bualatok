@@ -5,34 +5,43 @@
 <head>
     <meta charset="UTF-8">
 
-    <link rel="stylesheet" type="text/css" href="../style/main.css" />
+    <link rel="stylesheet" type="text/css" href="../style/loginGrid.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script type="module" src="views/login.js"></script>
 
     <title> Login </title>
     <div id="header">
-        <h1> BualaTok </h1>
+        
     </div>
 </head>
 
 <body>
-    <label>La web para comprar y cambiar lo que te sobra</label>
-    <img src="public/icono.png" alt="Logo">
-    <form>
-            <div class="container">
-            <div>
-                <input type="text" id="username" size="100%" class="inCorto" placeholder="Username"><br>
-            </div>
-            <div>
-                <input type="password" id="password" size="100%" class="inPass" placeholder="Password"><br>
-            </div>
-
+    <div class="contenedor">
+        <label id="titulo">
+            <h1> BualaTok </h1>
+        </label>
+        <div id="labelLogin">
+            <label>La web para comprar y cambiar lo que te sobra</label>
         </div>
+        <div id="icono">
+            <img src="public/icono.png" alt="Logo">
+        </div>
+        <div class="container">
+            <form>
+                <div>
+                    <input type="text" id="username" size="100%" class="inLargo" placeholder="Username"><br>
+                </div>
+                <div>
+                    <input type="password" id="password" size="100%" class="inLargo" placeholder="Password"><br>
+                </div>
+            </form>
+        </div>
+        <button type="button" id="registroButton">Registro</button>
+        <button type="button" id="loginButton">Enviar</button>
+
     </div>
-    <button type="button" id="registroButton">Registro</button>
-    <button type="button" id="loginButton">Enviar</button>
-    </form>
+
 </body>
 
 
