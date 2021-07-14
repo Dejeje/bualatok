@@ -72,7 +72,7 @@ router.post('/editUser', async function(req, res) {
     let province = req.body.province.toString();
 
     currentUser.name = name;
-    currentUser.surname = namsurnamee;
+    currentUser.surname = surname;
     currentUser.password = password;
     currentUser.email = email;
     currentUser.credit = credit;
@@ -128,7 +128,7 @@ router.post('/comprar', async function(req, res) {
 
         addCreditToUser(product.owner, product.price);
         deleteProduct(product.idproduct);
-
+        editUser(currentUser.name, currentUser.surname, currentUser.username, currentUser.password, currentUser.credit, currentUser.province, currentUser.email);
         res.sendStatus(200);
     }
 });

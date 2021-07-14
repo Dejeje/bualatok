@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.replace('../public/buscar.html');
     });
     document.getElementById('products').addEventListener('click', function() {
+        window.location.replace('../public/tusProductos.html');
         getAllProducts();
     });
     document.getElementById('logout').addEventListener('click', function() {
