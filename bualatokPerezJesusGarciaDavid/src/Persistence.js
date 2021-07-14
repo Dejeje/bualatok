@@ -1,7 +1,5 @@
 const mysql = require('mysql');
 
-var currentUser;
-
 const conn = mysql.createConnection(
     {
         host: 'localhost',
@@ -32,8 +30,8 @@ exports.getUser = async function(username, password) {
     return null;
 }
 
-exports.addProduct = async function(name, price, description, date, category, state) {
-    const inserted = await insertProduct({"name": name, "price": price, "description": description, "date": date, "category": category, "state": state});
+exports.addProduct = async function(name, price, description, date, category, state, owner) {
+    const inserted = await insertProduct({"name": name, "price": price, "description": description, "date": date, "category": category, "state": state, "owner": owner});
 
     return inserted;
 }
