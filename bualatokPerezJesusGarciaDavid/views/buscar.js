@@ -52,10 +52,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         var products = await getProductsByFilter(text, minPrice, maxPrice, category, state);
         for (const product of products) {
-            console.log(product);
-            
-            var div = document.createElement('div');
-            
             var nombre = document.createElement('label');
             nombre.setAttribute('class','productLabel');
             nombre.appendChild(document.createTextNode(product.name));
@@ -80,8 +76,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 comprarProducto(product.idproduct);
             });
 
-
-
             let row = document.createElement('tr');
             let data_1 = document.createElement('td');
             data_1.appendChild(nombre);
@@ -100,15 +94,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             row.appendChild(data_4);
             row.appendChild(data_5);
             tbody.appendChild(row);
-
-/*
-            div.appendChild(nombre);
-            div.appendChild(description);
-            div.appendChild(price);
-            div.appendChild(timesSeen);
-            div.appendChild(comprar);
-*/
-           // container.appendChild(div);
         }
     })
     document.getElementById('volverButton').addEventListener('click', function() {
